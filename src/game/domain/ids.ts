@@ -1,0 +1,11 @@
+type Brand<T, Name extends string> = T & { readonly __brand: Name };
+export type CountryId = Brand<string, "CountryId">;
+export type LeagueId = Brand<string, "LeagueId">;
+export type ClubId = Brand<string, "ClubId">;
+export type FixtureId = Brand<string, "FixtureId">;
+export type EventId = Brand<string, "EventId">;
+export const countryId = (value: string): CountryId => value as CountryId;
+export const leagueId = (value: string): LeagueId => value as LeagueId;
+export const clubId = (value: string): ClubId => value as ClubId;
+export const fixtureId = (value: string): FixtureId => value as FixtureId;
+export const eventId = (value: string): EventId => value as EventId;
