@@ -1,0 +1,4 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; line-height: 1.5; }
+main { width: min(72rem, 100%); margin-inline: auto; padding: 1rem; }
+button, input, select { min-height: 44px; font: inherit; }
