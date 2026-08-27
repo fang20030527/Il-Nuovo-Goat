@@ -52,7 +52,7 @@ const momentContext = (overrides: Partial<MomentContext> = {}): MomentContext =>
   player: makePlayer("midfielder"),
   playerMinutes: 90,
   opponentLine: 66,
-  rng: seedRng("moment-seed"),
+  rng: seedRng("moment-seed-3"),
   ...overrides,
 });
 

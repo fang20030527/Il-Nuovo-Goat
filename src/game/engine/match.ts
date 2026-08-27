@@ -81,7 +81,7 @@ const selectPlayer = (context: MatchContext, state: RngState): Selection => {
   if (appearDraw.value >= probability) {
     return { ...idle, state: appearDraw.state };
   }
-  const starts = player.contract.role !== "prospect" && probability >= 0.5;
+  const starts = player.contract.role === "star" || player.contract.role === "starter";
   const minutesDraw = nextFloat(appearDraw.state);
   const minutes = starts
     ? Math.round(75 + minutesDraw.value * 45)

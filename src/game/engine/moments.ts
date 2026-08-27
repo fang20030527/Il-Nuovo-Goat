@@ -79,8 +79,19 @@ export const createMoment = (
   if (context.playerMinutes <= 0) {
     return { moment: null, rng: context.rng };
   }
+  // Decide whether a moment occurs at all so that matches without a key
+  // decision do not pause detailed mode. This draw is consumed for every
+  // on-pitch match, keeping the rng stream aligned between modes.
+  // The base rate of 0.5 is scaled by playing time so that starters see a
+  // key moment in roughly two thirds of their matches, while a late
+  // substitute appearance rarely produces one.
+  const occurrenceChance = Math.min(0.75, Math.max(0.1, 0.5 * (context.playerMinutes / 90)));
+  const occursDraw = nextFloat(context.rng);
+  if (occursDraw.value >= occurrenceChance) {
+    return { moment: null, rng: occursDraw.state };
+  }
   const catalog = momentOptions[context.player.position];
-  const minuteDraw = nextInt(context.rng, 5, 115);
+  const minuteDraw = nextInt(occursDraw.state, 5, 115);
   const state = minuteDraw.state;
   const options = catalog.map(({ id, label, risk }) => ({ id, label, risk }));
   return {

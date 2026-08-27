@@ -1,5 +1,5 @@
 import type { ClubId, EventId, FixtureId, LeagueId } from "./ids";
-import type { CompetitionKind, Fixture, LeagueTableRow, MatchResult, ActiveMoment } from "./competition";
+import type { CompetitionKind, Fixture, LeagueTableRow, MatchResult, ActiveMoment, PlayerMatchPerformance } from "./competition";
 import type { Player, SeasonStats, TransferOffer } from "./player";
 import type { PositionFamily, World } from "./world";
 import type { GameCommand } from "./commands";
@@ -41,6 +41,29 @@ export interface SeasonState {
     readonly tournamentFinish: "not-held" | "group" | "runner-up" | "champion";
   };
   readonly pendingFixtureId: FixtureId | null;
+  // Detailed-mode per-match progress. Present only while a detailed season is
+  // being played fixture by fixture; classic seasons resolve wholesale.
+  readonly detailed: {
+    readonly playerFixtures: readonly Fixture[];
+    readonly nextFixtureIndex: number;
+    readonly seasonStats: SeasonStats;
+    readonly timeline: readonly string[];
+    readonly pendingMoment: {
+      readonly fixtureId: FixtureId;
+      readonly minute: number;
+      readonly score: readonly [number, number];
+      readonly playerMinutes: number;
+      readonly opponentLine: number;
+      readonly performance: PlayerMatchPerformance;
+      /** Options offered when the match paused; kept so CHOOSE_MOMENT can validate. */
+      readonly options: readonly { id: string; label: string; risk: "low" | "medium" | "high" }[];
+    } | null;
+    readonly lastMatch: MatchResult | null;
+    /** Player-league results played so far, in play order (moment-adjusted). */
+    readonly playedResults: readonly MatchResult[];
+    /** Neutral (non-player) league results, filled when the season finishes. */
+    readonly neutralResults: readonly MatchResult[];
+  } | null;
 }
 export interface RngState { readonly seed: number; readonly cursor: number }
 export interface CareerState {

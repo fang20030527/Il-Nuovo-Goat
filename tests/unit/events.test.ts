@@ -66,6 +66,7 @@ const makeState = (overrides: Partial<CareerState> = {}): CareerState => ({
     continentalCupWinner: null,
     nationalTeamResult: { selected: false, appearances: 0, goals: 0, tournamentFinish: "not-held" },
     pendingFixtureId: null,
+    detailed: null,
   },
   archives: [],
   activeMoment: null,
