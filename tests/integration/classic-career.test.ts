@@ -74,7 +74,7 @@ describe("classic career", () => {
   it("resolves one classic season in less than one second on the test host", () => {
     const initial = createClassicCareer("classic-performance");
     const startedAt = performance.now();
-    let state = dispatchCommand(initial, chooseDeterministicDefault(initial));
+    const state = dispatchCommand(initial, chooseDeterministicDefault(initial));
     if (!state.ok) throw new Error(state.error.message);
     let current = state.value;
     while (current.phase !== "transfer-window" && current.phase !== "retired") {

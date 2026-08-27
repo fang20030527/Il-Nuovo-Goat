@@ -744,8 +744,8 @@ const applySeasonComputation = (
   const retired = state.player.age >= 36;
   const nextAge = retired ? state.player.age : state.player.age + 1;
 
-  let player: Player = { ...computation.player, age: nextAge };
-  let world = computation.world;
+  const player: Player = { ...computation.player, age: nextAge };
+  const world = computation.world;
 
   const offersResult = retired
     ? { value: [], rng: computation.rng }

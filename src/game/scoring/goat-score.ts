@@ -4,7 +4,8 @@
  * archived career record, so the same career always produces the same score.
  */
 import type { CareerState, Honour, IndividualAward } from "@/game/domain/career";
-import type { PositionFamily, SeasonStats } from "@/game/domain/player";
+import type { PositionFamily } from "@/game/domain/world";
+import type { SeasonStats } from "@/game/domain/player";
 import { gameError, type GameResult } from "@/game/domain/errors";
 
 export interface GoatScoreBreakdown {
@@ -89,6 +90,8 @@ const seasonOutput = (position: PositionFamily, stats: SeasonStats): number => {
         perFullSeason(stats.chancesCreated) * 0.08 +
         ratingBoost
       );
+    default:
+      return ratingBoost;
   }
 };
 

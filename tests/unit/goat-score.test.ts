@@ -28,9 +28,9 @@ const makePlayer = (overrides: Partial<Player> = {}): Player => ({
   coachTrust: 70,
   reputation: 70,
   marketValue: 20_000_000,
-  clubId: clubId("north-a-1"),
+  clubId: clubId("northland-aster-vale"),
   contract: {
-    clubId: clubId("north-a-1"),
+    clubId: clubId("northland-aster-vale"),
     startSeason: 19,
     endSeason: 21,
     weeklyWage: 40_000,
@@ -50,7 +50,7 @@ const makePlayer = (overrides: Partial<Player> = {}): Player => ({
 const makeArchive = (overrides: Partial<CareerArchive> = {}): CareerArchive => ({
   season: 1,
   age: 17,
-  clubId: clubId("north-a-1"),
+  clubId: clubId("northland-aster-vale"),
   stats: stats(),
   overall: 60,
   marketValue: 1_000_000,

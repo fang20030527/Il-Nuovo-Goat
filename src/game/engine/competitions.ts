@@ -36,7 +36,7 @@ export const playKnockoutRound = (
     const outcome = simulateNeutralMatch(world, fixture, state);
     state = outcome.rng;
     let homeGoals = outcome.result.homeGoals;
-    let awayGoals = outcome.result.awayGoals;
+    const awayGoals = outcome.result.awayGoals;
     if (homeGoals === awayGoals) {
       homeGoals += 1; // deterministic "extra time" tiebreak
     }
