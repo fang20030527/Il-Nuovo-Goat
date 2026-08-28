@@ -30,20 +30,41 @@ export default function HomePage() {
 
   return (
     <main>
-      <h1>{APP_NAME}</h1>
-      <p>Original browser football career simulator. All saves stay in this browser.</p>
-      <p>
-        <Link href="/world">Manage the active world</Link>
-      </p>
+      <header className="hero">
+        <h1 className="hero-title">{APP_NAME}</h1>
+        <p className="hero-tagline">
+          An original browser football career sim — your saves never leave this device.
+        </p>
+        <div className="hero-meta">
+          <span>Career sim</span>
+          <span>Offline first</span>
+          <span>JSON import / export</span>
+        </div>
+      </header>
+
+      <section className="banner gold" aria-label="Active world">
+        <p className="eyebrow">Active world</p>
+        <p style={{ margin: 0 }}>
+          Careers are created from the currently active world.{" "}
+          <Link href="/world" style={{ color: "inherit", fontWeight: 700 }}>
+            Browse or replace it
+          </Link>{" "}
+          with a custom universe before starting.
+        </p>
+      </section>
+
+      <p className="eyebrow">Save slots</p>
       {!loaded && <p>Loading saves…</p>}
-      {SLOTS.map((slot) => (
-        <SlotCard
-          key={slot}
-          slot={slot}
-          summary={summaryFor(slot)}
-          onChanged={() => setRefreshKey((key) => key + 1)}
-        />
-      ))}
+      <div className="card-grid">
+        {SLOTS.map((slot) => (
+          <SlotCard
+            key={slot}
+            slot={slot}
+            summary={summaryFor(slot)}
+            onChanged={() => setRefreshKey((key) => key + 1)}
+          />
+        ))}
+      </div>
     </main>
   );
 }

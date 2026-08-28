@@ -15,8 +15,9 @@ export const EventChoice = ({ state, pending, dispatch }: EventChoiceProps) => {
     : null;
   if (!event) return null;
   return (
-    <section className="panel" aria-label="Career event">
-      <h2>{event.title}</h2>
+    <section className="banner gold" aria-label="Career event">
+      <p className="eyebrow">Career event</p>
+      <h2 style={{ marginTop: 0 }}>{event.title}</h2>
       <p>{event.body}</p>
       <div className="button-row">
         {event.options.map((option) => (

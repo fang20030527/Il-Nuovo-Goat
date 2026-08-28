@@ -13,8 +13,9 @@ interface TransferChoicesProps {
 export const TransferChoices = ({ state, pending, dispatch }: TransferChoicesProps) => {
   const offers = state.transferOffers;
   return (
-    <section className="panel" aria-label="Transfer window">
-      <h2>Transfer window</h2>
+    <section className="mode-card purple" aria-label="Transfer window">
+      <span className="card-label purple">Decision time</span>
+      <h2 className="card-title" style={{ fontSize: "1.2rem" }}>Transfer window</h2>
       {state.phase === "season-review" && (
         <p>Season {state.season.season} complete. Review the offers below.</p>
       )}
@@ -42,7 +43,7 @@ export const TransferChoices = ({ state, pending, dispatch }: TransferChoicesPro
                     <td>
                       {offer.contract.startSeason}–{offer.contract.endSeason}
                     </td>
-                    <td>{Math.round(offer.financialFit * 100)}%</td>
+                    <td>{offer.financialFit.toFixed(1)}×</td>
                     <td>
                       <button
                         type="button"
@@ -82,6 +83,7 @@ export const TransferChoices = ({ state, pending, dispatch }: TransferChoicesPro
         {state.phase === "transfer-window" && (
           <button
             type="button"
+            className="primary"
             disabled={pending}
             data-game-action="START_NEXT_SEASON"
             onClick={() => void dispatch({ type: "START_NEXT_SEASON" })}

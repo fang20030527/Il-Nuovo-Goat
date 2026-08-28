@@ -37,7 +37,8 @@ export default function WorldPage() {
       <nav className="nav-row">
         <Link href="/">Saves</Link>
       </nav>
-      <h1>World</h1>
+      <p className="eyebrow green">World builder</p>
+      <h1 style={{ marginTop: 0 }}>The world they play in</h1>
       <p className="muted">
         The active world is used when a new career is created. Importing a custom world here
         replaces it for future careers only.

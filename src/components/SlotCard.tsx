@@ -64,13 +64,17 @@ export const SlotCard = ({ slot, summary, onChanged }: SlotCardProps) => {
   };
 
   return (
-    <section className="panel" aria-label={`Save slot ${slot}`}>
-      <h2>Slot {slot}</h2>
+    <section className={`mode-card ${slot === 2 ? "green" : slot === 3 ? "pink" : ""}`} aria-label={`Save slot ${slot}`}>
+      <span className={`card-label ${slot === 2 ? "green" : slot === 3 ? "pink" : ""}`}>
+        Slot {slot}
+      </span>
+      <h2 className="card-title" style={{ fontSize: "1.15rem" }}>
+        {summary === null ? "Free slot" : `Season ${summary.season}`}
+      </h2>
       {summary === null ? (
-        <p className="muted">Empty slot</p>
+        <p className="muted">Empty slot — start a new career here.</p>
       ) : (
         <dl className="stats-grid">
-          <div><dt>Season</dt><dd>{summary.season}</dd></div>
           <div><dt>Age</dt><dd>{summary.age}</dd></div>
           <div><dt>Overall</dt><dd>{summary.overall}</dd></div>
           <div><dt>Status</dt><dd>{summary.retired ? "Retired" : "Active"}</dd></div>
@@ -79,11 +83,11 @@ export const SlotCard = ({ slot, summary, onChanged }: SlotCardProps) => {
       )}
       <div className="button-row">
         {summary === null ? (
-          <Link className="button" href={`/career/new?slot=${slot}`} data-game-action="new-career">
+          <Link className="button primary" href={`/career/new?slot=${slot}`} data-game-action="new-career">
             New career
           </Link>
         ) : (
-          <Link className="button" href={`/career/${slot}`} data-game-action="continue-career">
+          <Link className="button primary" href={`/career/${slot}`} data-game-action="continue-career">
             Continue
           </Link>
         )}

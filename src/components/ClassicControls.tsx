@@ -15,8 +15,9 @@ export const ClassicControls = ({ state, pending, dispatch }: ClassicControlsPro
     : null;
 
   return (
-    <section className="panel" aria-label="Classic season controls">
-      <h2>Classic season</h2>
+    <section className="mode-card" aria-label="Classic season controls">
+      <span className="card-label">Rapid mode</span>
+      <h2 className="card-title" style={{ fontSize: "1.2rem" }}>Classic season</h2>
       <p>
         Season {state.season.season} · {state.season.completedClubFixtures} fixtures played
       </p>
@@ -43,6 +44,7 @@ export const ClassicControls = ({ state, pending, dispatch }: ClassicControlsPro
           type="button"
           disabled={pending}
           data-game-action="ADVANCE_CLASSIC"
+          className="primary"
           onClick={() => void dispatch({ type: "ADVANCE_CLASSIC" })}
         >
           Advance classic season

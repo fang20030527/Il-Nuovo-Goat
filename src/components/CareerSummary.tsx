@@ -16,12 +16,12 @@ export const CareerSummary = ({ state }: { readonly state: CareerState }) => {
         <div><dt>Club</dt><dd>{club?.name ?? "Unknown"}</dd></div>
         <div><dt>League</dt><dd>{league?.name ?? "Unknown"}</dd></div>
         <div><dt>Season</dt><dd>{state.season.season}</dd></div>
-        <div><dt>Reputation</dt><dd>{state.player.reputation}</dd></div>
+        <div><dt>Reputation</dt><dd>{Math.round(state.player.reputation * 10) / 10}</dd></div>
         <div><dt>Market value</dt><dd>{state.player.marketValue.toLocaleString()}</dd></div>
-        <div><dt>Fitness</dt><dd>{state.player.fitness}</dd></div>
-        <div><dt>Form</dt><dd>{state.player.form}</dd></div>
-        <div><dt>Morale</dt><dd>{state.player.morale}</dd></div>
-        <div><dt>Coach trust</dt><dd>{state.player.coachTrust}</dd></div>
+        <div><dt>Fitness</dt><dd>{Math.round(state.player.fitness)}</dd></div>
+        <div><dt>Form</dt><dd>{Math.round(state.player.form)}</dd></div>
+        <div><dt>Morale</dt><dd>{Math.round(state.player.morale)}</dd></div>
+        <div><dt>Coach trust</dt><dd>{Math.round(state.player.coachTrust)}</dd></div>
         <div>
           <dt>Contract</dt>
           <dd>

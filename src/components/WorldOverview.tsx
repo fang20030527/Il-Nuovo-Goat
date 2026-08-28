@@ -16,7 +16,8 @@ export const WorldOverview = ({ world }: { readonly world: World }) => (
       {world.countries.map((country) => {
         const leagues = world.leagues.filter((league) => league.countryId === country.id);
         return (
-          <article key={country.id} className="world-country">
+          <article key={country.id} className="mode-card green world-country">
+            <span className="card-label green">Country</span>
             <h3>{country.name}</h3>
             <p className="muted">National team strength {country.nationalTeamStrength}</p>
             {leagues.map((league) => {

@@ -180,7 +180,7 @@ export const NewCareerForm = ({ slot, world, occupied }: NewCareerFormProps) => 
       </label>
 
       {error !== null && <p role="alert" className="error-text">{error}</p>}
-      <button type="submit" disabled={pending} data-game-action="create-career">
+      <button type="submit" className="primary" disabled={pending} data-game-action="create-career">
         {pending ? "Creating…" : "Create career"}
       </button>
     </form>

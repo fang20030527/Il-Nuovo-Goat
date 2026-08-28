@@ -22,8 +22,9 @@ export const DetailedMatch = ({ state, pending, dispatch }: DetailedMatchProps) 
   if (state.phase === "detailed-prematch") {
     const fixture = detailed?.playerFixtures[detailed.nextFixtureIndex];
     return (
-      <section className="panel" aria-label="Next match">
-        <h2>Next match</h2>
+      <section className="mode-card green" aria-label="Next match">
+        <span className="card-label green">Immersive mode</span>
+        <h2 className="card-title" style={{ fontSize: "1.2rem" }}>Next match</h2>
         {fixture ? (
           <p>
             {clubName(state, fixture.homeClubId)} vs {clubName(state, fixture.awayClubId)}
@@ -36,6 +37,7 @@ export const DetailedMatch = ({ state, pending, dispatch }: DetailedMatchProps) 
           type="button"
           disabled={pending || !fixture}
           data-game-action="START_NEXT_MATCH"
+          className="primary"
           onClick={() => void dispatch({ type: "START_NEXT_MATCH" })}
         >
           Start next match
@@ -47,8 +49,9 @@ export const DetailedMatch = ({ state, pending, dispatch }: DetailedMatchProps) 
   if (state.phase === "detailed-moment" && state.activeMoment) {
     const moment = state.activeMoment;
     return (
-      <section className="panel" aria-label="Match moment" data-testid="active-moment">
-        <h2>Key moment — minute {moment.minute}</h2>
+      <section className="banner" aria-label="Match moment" data-testid="active-moment">
+        <p className="eyebrow purple">Key moment</p>
+        <h2 style={{ marginTop: 0 }}>Minute {moment.minute} — your call</h2>
         <p>Score: {moment.score[0]} – {moment.score[1]}</p>
         <p>{moment.prompt}</p>
         <div className="button-row">
@@ -83,7 +86,8 @@ export const DetailedMatch = ({ state, pending, dispatch }: DetailedMatchProps) 
     const match = detailed.lastMatch;
     return (
       <section className="panel" aria-label="Match report">
-        <h2>Match report</h2>
+        <p className="eyebrow green">Full time</p>
+        <h2 style={{ marginTop: 0 }}>Match report</h2>
         <p>
           {clubName(state, match.homeClubId)} {match.homeGoals} – {match.awayGoals}{" "}
           {clubName(state, match.awayClubId)}
@@ -110,6 +114,7 @@ export const DetailedMatch = ({ state, pending, dispatch }: DetailedMatchProps) 
           type="button"
           disabled={pending}
           data-game-action="ACKNOWLEDGE_MATCH"
+          className="primary"
           onClick={() => void dispatch({ type: "ACKNOWLEDGE_MATCH" })}
         >
           Acknowledge

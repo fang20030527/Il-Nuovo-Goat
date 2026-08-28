@@ -47,8 +47,10 @@ export default function CareerPage() {
         <Link href={`/career/${slot}/archive`}>Archive</Link>
         {state.phase === "retired" && <Link href={`/career/${slot}/retirement`}>Retirement</Link>}
       </nav>
-      <h1>
-        {state.player.name} <span className="muted">— <span data-testid="current-phase">{state.phase}</span></span>
+      <p className="eyebrow">Career — season {state.season.season}</p>
+      <h1 style={{ marginTop: 0 }}>
+        {state.player.name}{" "}
+        <span className="badge badge-live"><span data-testid="current-phase">{state.phase}</span></span>
       </h1>
       {career.error !== null && <p role="alert" className="error-text">{career.error}</p>}
       <CareerSummary state={state} />
@@ -59,7 +61,8 @@ export default function CareerPage() {
 
       {state.phase === "preseason" && (
         <section className="panel" aria-label="Start season">
-          <h2>Preseason — season {state.season.season}</h2>
+          <p className="eyebrow purple">Preseason</p>
+          <h2 style={{ marginTop: 0 }}>Season {state.season.season} awaits</h2>
           <StartSeasonForm pending={career.pending} dispatch={dispatch} defaults={state} />
         </section>
       )}
@@ -161,7 +164,7 @@ const StartSeasonForm = ({
         <option value="seek-transfer">seek-transfer</option>
       </select>
     </label>
-    <button type="submit" disabled={pending} data-game-action="START_SEASON">
+    <button type="submit" className="primary" disabled={pending} data-game-action="START_SEASON">
       Start season
     </button>
   </form>
