@@ -20,9 +20,10 @@ interface NewCareerFormProps {
   readonly slot: CareerSlot;
   readonly world: World;
   readonly occupied: boolean;
+  readonly defaultMode?: GameMode;
 }
 
-export const NewCareerForm = ({ slot, world, occupied }: NewCareerFormProps) => {
+export const NewCareerForm = ({ slot, world, occupied, defaultMode = "classic" }: NewCareerFormProps) => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
@@ -154,7 +155,7 @@ export const NewCareerForm = ({ slot, world, occupied }: NewCareerFormProps) => 
 
       <label>
         Mode
-        <select name="mode" defaultValue="classic">
+        <select name="mode" defaultValue={defaultMode}>
           {MODES.map((mode) => (
             <option key={mode} value={mode}>{mode}</option>
           ))}

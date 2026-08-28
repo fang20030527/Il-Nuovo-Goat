@@ -3,10 +3,53 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { APP_NAME } from "@/game/constants";
+import { RULES_VERSION } from "@/game/constants";
 import { listSlots, type CareerSlot, type SlotSummary } from "@/persistence/career-db";
 import { SlotCard } from "@/components/SlotCard";
 
 const SLOTS: readonly CareerSlot[] = [1, 2, 3];
+
+const LAST_UPDATE = "28/08";
+
+const GAME_MODES = [
+  {
+    key: "classic",
+    badge: "Fast",
+    badgeClass: "",
+    title: "Classic",
+    description: "Season in one go · standings right away · trophy per competition",
+  },
+  {
+    key: "detailed",
+    badge: "Immersive",
+    badgeClass: "green",
+    title: "Detailed",
+    description: "Immersive report · boards step by step · match sims",
+  },
+] as const;
+
+const DAILY_CHALLENGES = [
+  {
+    title: "Bomber da 300",
+    description: "Chiudi una carriera con almeno 300 gol totali.",
+    target: 300,
+  },
+  {
+    title: "Muro Invalicabile",
+    description: "Finish a season with fewer than 20 goals conceded.",
+    target: 20,
+  },
+  {
+    title: "Campionissimo",
+    description: "Win the top division in three different countries.",
+    target: 3,
+  },
+] as const;
+
+const dayOfYear = Math.floor(
+  (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86_400_000,
+);
+const dailyChallenge = DAILY_CHALLENGES[dayOfYear % DAILY_CHALLENGES.length];
 
 export default function HomePage() {
   const [summaries, setSummaries] = useState<readonly SlotSummary[]>([]);
@@ -70,6 +113,44 @@ export default function HomePage() {
           </div>
         </div>
       </header>
+
+      <div className="version-strip">
+        <span className="muted">Version {RULES_VERSION}</span>
+        <span className="muted">Last update: {LAST_UPDATE}</span>
+      </div>
+
+      <p className="eyebrow">Career mode</p>
+      <div className="card-grid" style={{ marginBottom: "1.5rem" }}>
+        {GAME_MODES.map((mode) => (
+          <Link
+            key={mode.key}
+            href={`/career/new?slot=1&mode=${mode.key}`}
+            className="mode-card mode-card-link"
+          >
+            <span className={`card-label ${mode.badgeClass}`}>{mode.badge}</span>
+            <h2 className="card-title">{mode.title}</h2>
+            <p className="muted">{mode.description}</p>
+          </Link>
+        ))}
+      </div>
+
+      <section className="banner purple" aria-label="Daily challenge">
+        <div className="banner-body">
+          <p className="eyebrow" style={{ margin: 0 }}>Today&apos;s challenge</p>
+          <h2 className="banner-title">{dailyChallenge.title}</h2>
+          <p style={{ margin: "0.35rem 0 0" }}>{dailyChallenge.description}</p>
+        </div>
+        <div className="banner-side">
+          <div className="banner-stat">
+            <span className="banner-stat-value">0</span>
+            <span className="banner-stat-label">Streak</span>
+          </div>
+          <div className="banner-stat">
+            <span className="banner-stat-label">Target</span>
+            <span className="banner-stat-value">{dailyChallenge.target}</span>
+          </div>
+        </div>
+      </section>
 
       <section className="banner gold" aria-label="Active world">
         <p className="eyebrow">Active world</p>

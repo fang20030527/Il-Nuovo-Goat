@@ -13,6 +13,8 @@ const NewCareerInner = () => {
   const params = useSearchParams();
   const slotParam = Number(params.get("slot") ?? "1");
   const slot = (slotParam === 2 || slotParam === 3 ? slotParam : 1) as CareerSlot;
+  const modeParam = params.get("mode");
+  const defaultMode = modeParam === "detailed" ? "detailed" as const : "classic" as const;
   const [world, setWorld] = useState<World | null>(null);
   const [occupied, setOccupied] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -53,7 +55,7 @@ const NewCareerInner = () => {
         deterministically from your seed.
       </p>
       {occupied && <p className="error-text">This slot already holds a career; creating will replace it.</p>}
-      <NewCareerForm slot={slot} world={world} occupied={occupied} />
+      <NewCareerForm slot={slot} world={world} occupied={occupied} defaultMode={defaultMode} />
     </main>
   );
 };

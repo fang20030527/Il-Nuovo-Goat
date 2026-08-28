@@ -242,6 +242,64 @@ h1, h2, h3 { line-height: 1.15; }
   border-color: rgba(245, 166, 35, 0.4);
   background: linear-gradient(120deg, rgba(245, 166, 35, 0.18), rgba(120, 75, 12, 0.45) 55%, rgba(245, 166, 35, 0.14));
 }
+.banner.purple {
+  border-color: rgba(139, 92, 246, 0.45);
+  background: linear-gradient(120deg, rgba(139, 92, 246, 0.32), rgba(75, 46, 160, 0.55) 55%, rgba(139, 92, 246, 0.28));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.banner-body { flex: 1; min-width: 0; }
+.banner-title {
+  margin: 0.2rem 0 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+.banner-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+.banner-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.45rem 0.9rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  min-width: 4.5rem;
+}
+.banner-stat-value {
+  font-size: 1.4rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+.banner-stat-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Version strip */
+.version-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.78rem;
+  padding: 0.35rem 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Mode card as link */
+.mode-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 
 /* Import / upload box */
 .upload-box {
