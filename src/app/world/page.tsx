@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { World } from "@/game/domain/world";
 import { loadActiveWorld, saveActiveWorld } from "@/persistence/career-db";
 import { createDefaultWorld } from "@/game/world/default-world";
+import { WorldOverview } from "@/components/WorldOverview";
 import { WorldTransfer } from "@/components/WorldTransfer";
 
 export default function WorldPage() {
@@ -41,6 +42,7 @@ export default function WorldPage() {
         The active world is used when a new career is created. Importing a custom world here
         replaces it for future careers only.
       </p>
+      <WorldOverview world={world} />
       <WorldTransfer world={world} onReplaced={() => setRefreshKey((key) => key + 1)} />
     </main>
   );

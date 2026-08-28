@@ -97,3 +97,51 @@ th { color: var(--muted); font-size: 0.85rem; }
 
 details { margin-top: 0.75rem; }
 summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+
+/* Career page additions */
+.badge {
+  display: inline-block;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  vertical-align: middle;
+  margin-left: 0.35rem;
+}
+.badge-live { background: rgba(77, 201, 138, 0.15); color: var(--success); border: 1px solid var(--success); }
+.badge-final { background: rgba(77, 159, 255, 0.12); color: var(--accent); border: 1px solid var(--accent); }
+.badge-projected { background: rgba(230, 183, 92, 0.12); color: #e6b75c; border: 1px solid #e6b75c; }
+.projection-note { margin: 4px 0 10px; font-size: 13px; }
+
+.fixture-line { margin: 0.25rem 0 0.5rem; }
+
+.form-guide { display: flex; gap: 0.3rem; margin: 0.35rem 0 0.75rem; }
+.form-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.form-w { background: rgba(77, 201, 138, 0.2); color: var(--success); }
+.form-d { background: rgba(138, 148, 168, 0.2); color: var(--muted); }
+.form-l { background: rgba(224, 93, 93, 0.18); color: var(--danger); }
+
+.row-highlight td { background: rgba(77, 159, 255, 0.08); font-weight: 600; }
+
+.season-extras { margin-top: 0.75rem; }
+
+.timeline { padding-left: 1.2rem; margin: 0.4rem 0 0.8rem; }
+.timeline li { margin-block: 0.2rem; }
+
+.world-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.world-country h3 { margin-bottom: 0.2rem; }
+.world-country ul { padding-left: 1.2rem; margin: 0.4rem 0; }

@@ -14,6 +14,21 @@ const hashSeed = (text: string): number => {
 
 export const seedRng = (seed: string): RngState => ({ seed: hashSeed(seed), cursor: 0 });
 
+/**
+ * Deterministically mixes extra labels into an RNG state, producing an
+ * independent stream. Used for read-only projections (e.g. simulating
+ * hypothetical future results for display) so they never consume the career's
+ * authoritative RNG cursor.
+ */
+export const mixRng = (state: RngState, ...labels: readonly (string | number)[]): RngState => {
+  let acc = state;
+  for (const label of labels) {
+    const mixed = seedRng(`${acc.seed}:${acc.cursor}:${String(label)}`);
+    acc = { seed: mixed.seed, cursor: 0 };
+  }
+  return acc;
+};
+
 export const nextFloat = (state: RngState): RandomResult<number> => {
   let value = (state.seed + Math.imul(state.cursor + 1, 0x6d2b79f5)) >>> 0;
   value = Math.imul(value ^ (value >>> 15), value | 1);

@@ -6,9 +6,11 @@ import type { GameCommand } from "@/game/domain/commands";
 import type { CareerSlot } from "@/persistence/career-db";
 import { useCareerSlot } from "@/hooks/use-career-slot";
 import { CareerSummary } from "@/components/CareerSummary";
+import { CareerTimeline } from "@/components/CareerTimeline";
 import { ClassicControls } from "@/components/ClassicControls";
 import { DetailedMatch } from "@/components/DetailedMatch";
 import { EventChoice } from "@/components/EventChoice";
+import { SeasonOverview } from "@/components/SeasonOverview";
 import { TransferChoices } from "@/components/TransferChoices";
 
 const parseSlot = (raw: string | string[] | undefined): CareerSlot => {
@@ -41,6 +43,7 @@ export default function CareerPage() {
     <main>
       <nav className="nav-row">
         <Link href="/">Saves</Link>
+        <Link href="/world">World</Link>
         <Link href={`/career/${slot}/archive`}>Archive</Link>
         {state.phase === "retired" && <Link href={`/career/${slot}/retirement`}>Retirement</Link>}
       </nav>
@@ -49,6 +52,10 @@ export default function CareerPage() {
       </h1>
       {career.error !== null && <p role="alert" className="error-text">{career.error}</p>}
       <CareerSummary state={state} />
+
+      {state.phase !== "preseason" && state.phase !== "retired" && (
+        <SeasonOverview state={state} />
+      )}
 
       {state.phase === "preseason" && (
         <section className="panel" aria-label="Start season">
@@ -86,6 +93,8 @@ export default function CareerPage() {
           </Link>
         </section>
       )}
+
+      <CareerTimeline state={state} />
 
       {career.hasBackup && (
         <button
