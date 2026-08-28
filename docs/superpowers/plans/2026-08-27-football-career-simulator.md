@@ -93,7 +93,7 @@ README.md                                 setup, commands, and scope
 - Consumes: none.
 - Produces: `pnpm test`, `pnpm build`, `pnpm lint`, and `pnpm e2e` command contracts used by every later task.
 
-- [ ] **Step 1: Write the package and compiler contracts**
+- [x] **Step 1: Write the package and compiler contracts**
 
 ```json
 {
@@ -200,13 +200,13 @@ export default defineConfig([
 ]);
 ```
 
-- [ ] **Step 2: Install the locked dependencies**
+- [x] **Step 2: Install the locked dependencies**
 
 Run: `pnpm install`
 
 Expected: `pnpm-lock.yaml` is created and installation exits 0.
 
-- [ ] **Step 3: Write the failing smoke test**
+- [x] **Step 3: Write the failing smoke test**
 
 ```ts
 import { describe, expect, it } from "vitest";
@@ -219,13 +219,13 @@ describe("project foundation", () => {
 });
 ```
 
-- [ ] **Step 4: Run the smoke test and verify failure**
+- [x] **Step 4: Run the smoke test and verify failure**
 
 Run: `pnpm test -- tests/unit/smoke.test.ts`
 
 Expected: FAIL because `@/game/constants` does not exist.
 
-- [ ] **Step 5: Add the minimal application constant and root page**
+- [x] **Step 5: Add the minimal application constant and root page**
 
 ```ts
 // src/game/constants.ts
@@ -270,13 +270,13 @@ main { width: min(72rem, 100%); margin-inline: auto; padding: 1rem; }
 button, input, select { min-height: 44px; font: inherit; }
 ```
 
-- [ ] **Step 6: Run foundation verification**
+- [x] **Step 6: Run foundation verification**
 
 Run: `pnpm test -- tests/unit/smoke.test.ts && pnpm lint && pnpm build`
 
 Expected: one passing test, ESLint exits 0, and Next.js creates `.next` successfully.
 
-- [ ] **Step 7: Commit the foundation**
+- [x] **Step 7: Commit the foundation**
 
 ```bash
 git add package.json pnpm-lock.yaml tsconfig.json next.config.ts eslint.config.mjs vitest.config.ts playwright.config.ts src/app src/game/constants.ts tests/unit/smoke.test.ts
@@ -299,7 +299,7 @@ git commit -m "chore: scaffold football career simulator"
 - Consumes: `RULES_VERSION`, `SAVE_SCHEMA_VERSION` from `src/game/constants.ts`.
 - Produces: `CareerState`, `GameCommand`, `GameResult<T>`, `World`, `Player`, `Fixture`, `MatchResult`, and branded ID types used by all later tasks.
 
-- [ ] **Step 1: Write compile-time and runtime domain tests**
+- [x] **Step 1: Write compile-time and runtime domain tests**
 
 ```ts
 import { describe, expect, it } from "vitest";
@@ -325,13 +325,13 @@ describe("domain contracts", () => {
 });
 ```
 
-- [ ] **Step 2: Run the domain test and verify failure**
+- [x] **Step 2: Run the domain test and verify failure**
 
 Run: `pnpm test -- tests/unit/domain.test.ts`
 
 Expected: FAIL because the domain modules do not exist.
 
-- [ ] **Step 3: Implement exact ID, error, world, player, competition, career, and command shapes**
+- [x] **Step 3: Implement exact ID, error, world, player, competition, career, and command shapes**
 
 ```ts
 // src/game/domain/ids.ts
@@ -545,13 +545,13 @@ export type GameResult<T> =
   | { ok: false; error: { code: DomainErrorCode; message: string; path?: string } };
 ```
 
-- [ ] **Step 4: Run tests and type checking**
+- [x] **Step 4: Run tests and type checking**
 
 Run: `pnpm test -- tests/unit/domain.test.ts && pnpm exec tsc --noEmit`
 
 Expected: two passing tests and no TypeScript errors.
 
-- [ ] **Step 5: Commit the domain contract**
+- [x] **Step 5: Commit the domain contract**
 
 ```bash
 git add src/game/domain tests/unit/domain.test.ts
@@ -570,7 +570,7 @@ git commit -m "feat: define career simulation domain"
 - Consumes: `RngState`, `PositionFamily`, and player attributes from the domain files.
 - Produces: `seedRng(seed: string)`, `nextFloat(state)`, `nextInt(state,min,max)`, `pickWeighted(state, items)`, and `calculateOverall(position, attributes)`.
 
-- [ ] **Step 1: Write deterministic and range tests**
+- [x] **Step 1: Write deterministic and range tests**
 
 ```ts
 import { describe, expect, it } from "vitest";
@@ -600,13 +600,13 @@ describe("deterministic RNG", () => {
 });
 ```
 
-- [ ] **Step 2: Verify the tests fail**
+- [x] **Step 2: Verify the tests fail**
 
 Run: `pnpm test -- tests/unit/rng.test.ts`
 
 Expected: FAIL because `src/game/engine/rng.ts` does not exist.
 
-- [ ] **Step 3: Implement an explicit cursor-based PRNG**
+- [x] **Step 3: Implement an explicit cursor-based PRNG**
 
 ```ts
 export interface RandomResult<T> { readonly value: T; readonly state: RngState }
@@ -633,7 +633,7 @@ export const nextFloat = (state: RngState): RandomResult<number> => {
 
 Implement `nextInt` with inclusive bounds and rejection-free scaling, and `pickWeighted` with positive finite weights and an `INVALID_STATE` result when the list or total weight is invalid.
 
-- [ ] **Step 4: Implement position-weighted OVR**
+- [x] **Step 4: Implement position-weighted OVR**
 
 Use exact weights that sum to 1.0:
 
@@ -655,7 +655,7 @@ export const calculateOverall = (position: PositionFamily, attributes: PlayerAtt
 };
 ```
 
-- [ ] **Step 5: Add a fast-check replay property**
+- [x] **Step 5: Add a fast-check replay property**
 
 ```ts
 import fc from "fast-check";
@@ -675,7 +675,7 @@ it("replays arbitrary seeds and sequence lengths", () => {
 });
 ```
 
-- [ ] **Step 6: Verify and commit**
+- [x] **Step 6: Verify and commit**
 
 Run: `pnpm test -- tests/unit/rng.test.ts tests/property/rng.property.test.ts && pnpm exec tsc --noEmit`
 
@@ -699,7 +699,7 @@ git commit -m "feat: add deterministic career randomness"
 - Consumes: `World`, `Country`, `League`, `Club`, branded IDs, `WORLD_SCHEMA_VERSION`.
 - Produces: `createDefaultWorld(): World`, `parseWorldJson(text: string): WorldImportResult`, and `previewWorld(world: World): WorldPreview`.
 
-- [ ] **Step 1: Write exact world-shape tests**
+- [x] **Step 1: Write exact world-shape tests**
 
 ```ts
 import { describe, expect, it } from "vitest";
@@ -727,13 +727,13 @@ describe("default fictional world", () => {
 });
 ```
 
-- [ ] **Step 2: Verify world tests fail**
+- [x] **Step 2: Verify world tests fail**
 
 Run: `pnpm test -- tests/unit/world.test.ts`
 
 Expected: FAIL because the world modules do not exist.
 
-- [ ] **Step 3: Define the strict Zod schema**
+- [x] **Step 3: Define the strict Zod schema**
 
 Use `z.strictObject` at every persisted object boundary. Enforce kebab-case IDs, names from 1–60 characters without control characters, level 1 or 2, and all strength/facility/reputation values as integers from 1–100. Add a `superRefine` pass that enforces four countries, two leagues at levels 1 and 2 per country, ten clubs per league, globally unique IDs, and valid references.
 
@@ -758,7 +758,7 @@ export const clubSchema = z.strictObject({
 });
 ```
 
-- [ ] **Step 4: Generate exactly eighty original clubs from explicit country seeds**
+- [x] **Step 4: Generate exactly eighty original clubs from explicit country seeds**
 
 Use these country names and twenty original location names per country; division one uses indexes 0–9 and division two uses 10–19:
 
@@ -823,7 +823,7 @@ const makeClub = (countryIndex: number, country: CountrySeed, location: string, 
 };
 ```
 
-- [ ] **Step 5: Test safe import failures**
+- [x] **Step 5: Test safe import failures**
 
 ```ts
 it("reports a field path and never returns a partial world", () => {
@@ -842,7 +842,7 @@ it("returns a count preview for valid JSON", () => {
 });
 ```
 
-- [ ] **Step 6: Verify and commit**
+- [x] **Step 6: Verify and commit**
 
 Run: `pnpm test -- tests/unit/world.test.ts tests/unit/world-import.test.ts && pnpm exec tsc --noEmit`
 
@@ -865,7 +865,7 @@ git commit -m "feat: add original fictional football world"
 - Consumes: `ClubId`, `FixtureId`, `Fixture`, `LeagueTableRow`, `MatchResult`, `CompetitionKind`.
 - Produces: `createDoubleRoundRobin(leagueId, clubIds, season)`, `createKnockoutRound(competitionId, entrants, round, rng)`, `createEmptyTable(clubs)`, `applyLeagueResult(table, result)`, and `sortTable(table)`.
 
-- [ ] **Step 1: Write league schedule tests**
+- [x] **Step 1: Write league schedule tests**
 
 ```ts
 import { describe, expect, it } from "vitest";
@@ -890,13 +890,13 @@ describe("double round-robin schedule", () => {
 });
 ```
 
-- [ ] **Step 2: Run schedule tests and verify failure**
+- [x] **Step 2: Run schedule tests and verify failure**
 
 Run: `pnpm test -- tests/unit/schedule.test.ts`
 
 Expected: FAIL because `schedule.ts` does not exist.
 
-- [ ] **Step 3: Implement the circle algorithm with stable fixture IDs**
+- [x] **Step 3: Implement the circle algorithm with stable fixture IDs**
 
 ```ts
 export const createDoubleRoundRobin = (
@@ -944,7 +944,7 @@ const makeLeagueFixture = (
 });
 ```
 
-- [ ] **Step 4: Write and implement table accounting tests**
+- [x] **Step 4: Write and implement table accounting tests**
 
 ```ts
 const result = (home: string, away: string, homeGoals: number, awayGoals: number): MatchResult => ({
@@ -965,11 +965,11 @@ it("awards three points for a win and one for a draw", () => {
 
 Sort by points, goal difference, goals scored, wins, then stable club ID. Do not add head-to-head logic in the MVP.
 
-- [ ] **Step 5: Add property tests for schedule and points invariants**
+- [x] **Step 5: Add property tests for schedule and points invariants**
 
 For every permutation of ten unique generated club IDs, assert 90 fixtures, 18 matches per club, nine home and nine away matches per club, no self-match, and 90 unique ordered pairs. For arbitrary valid score pairs, assert total awarded points are 2 for a draw and 3 otherwise.
 
-- [ ] **Step 6: Verify and commit**
+- [x] **Step 6: Verify and commit**
 
 Run: `pnpm test -- tests/unit/schedule.test.ts tests/property/schedule.property.test.ts`
 
@@ -993,7 +993,7 @@ git commit -m "feat: schedule fictional football competitions"
 - Consumes: `Fixture`, `World`, `Player`, `RngState`, `PositionFamily`, `MatchResult`.
 - Produces: `prepareMatch(context)`, `simulateMatch(context)`, `createMoment(context)`, and `resolveMoment(context, optionId)`.
 
-- [ ] **Step 1: Write a deterministic match test**
+- [x] **Step 1: Write a deterministic match test**
 
 ```ts
 it("produces the same result and cursor from identical inputs", () => {
@@ -1011,13 +1011,13 @@ it("returns non-negative integer scores and a bounded player rating", () => {
 });
 ```
 
-- [ ] **Step 2: Verify match tests fail**
+- [x] **Step 2: Verify match tests fail**
 
 Run: `pnpm test -- tests/unit/match.test.ts`
 
 Expected: FAIL because `match.ts` does not exist.
 
-- [ ] **Step 3: Implement shared expected-goals resolution**
+- [x] **Step 3: Implement shared expected-goals resolution**
 
 Calculate each side's attack value from forward 40%, midfield 25%, opposing defence inverse 25%, form 5%, and home advantage 5%. Convert the rating difference to xG with `clamp(0.25, 3.4, 1.25 + difference / 35)`. Sample goals by accumulating six independent Bernoulli trials whose probabilities sum to the xG target, capped at six goals. Detailed mode must use the same baseline result before player moments modify it.
 
@@ -1038,7 +1038,7 @@ const sampleGoals = (rng: RngState, expectedGoals: number) => {
 
 Player selection probability comes from promised role, coach trust, fitness, injury, and OVR versus the club's relevant line. Record starts, substitute appearances, minutes, rating, cards, goals, assists, saves, and clean sheets by position.
 
-- [ ] **Step 4: Define the complete moment option catalog**
+- [x] **Step 4: Define the complete moment option catalog**
 
 ```ts
 export const momentOptions = {
@@ -1071,15 +1071,15 @@ export const momentOptions = {
 
 Generate zero moments when the player does not appear and zero to three otherwise. Resolve success against a threshold derived from the selected skill, fitness, form, opponent line, match state, and risk. Return updated score, performance, timeline, and RNG cursor without mutating the input.
 
-- [ ] **Step 5: Test position filtering and invalid choices**
+- [x] **Step 5: Test position filtering and invalid choices**
 
 Assert that a forward never receives goalkeeper options, a benched player receives no moment, and an option not in the active moment returns `INVALID_OPTION` without moving the RNG cursor.
 
-- [ ] **Step 6: Add match property tests**
+- [x] **Step 6: Add match property tests**
 
 Across 1,000 generated club-strength/player-condition combinations, assert integer scores from 0–6, ratings from 1–10, minutes from 0–120, no player goal when minutes are zero, and deterministic replay.
 
-- [ ] **Step 7: Verify and commit**
+- [x] **Step 7: Verify and commit**
 
 Run: `pnpm test -- tests/unit/match.test.ts tests/unit/moments.test.ts tests/property/match.property.test.ts`
 
@@ -1102,7 +1102,7 @@ git commit -m "feat: simulate matches and player moments"
 - Consumes: `Player`, `TrainingFocus`, season minutes/ratings, club facilities, `RngState`.
 - Produces: `applySeasonProgression(input)`, `rollMatchInjury(input)`, `advanceInjuryRecovery(player)`, and `trainingEffect(focus, player)`.
 
-- [ ] **Step 1: Write age-curve tests**
+- [x] **Step 1: Write age-curve tests**
 
 ```ts
 it("grows a high-potential 18-year-old starter faster than a benched peer", () => {
@@ -1118,13 +1118,13 @@ it("declines physical ability after age 33 while allowing mentality to hold", ()
 });
 ```
 
-- [ ] **Step 2: Verify progression tests fail**
+- [x] **Step 2: Verify progression tests fail**
 
 Run: `pnpm test -- tests/unit/progression.test.ts tests/unit/injuries.test.ts`
 
 Expected: FAIL because progression and injury modules do not exist.
 
-- [ ] **Step 3: Implement exact age multipliers and caps**
+- [x] **Step 3: Implement exact age multipliers and caps**
 
 ```ts
 const ageGrowthMultiplier = (age: number): number => {
@@ -1144,7 +1144,7 @@ const minutesMultiplier = (minutes: number): number => {
 
 Calculate a base seasonal delta from age multiplier, minutes multiplier, potential gap, average rating, facilities, and training focus. Clamp every attribute to 1–99 and never allow OVR to exceed potential by more than two points. At ages 33–36, apply physical decline before positive training effects.
 
-- [ ] **Step 4: Implement injury risk and recovery**
+- [x] **Step 4: Implement injury risk and recovery**
 
 Use four severities: knock (1 match), strain (2–4), fracture (5–10), and major (11–24). Base per-appearance risk is 1.8%, multiplied by low fitness, age over 31, physical ability below 55, and recent workload. Major injuries apply a deterministic recovery outcome that can reduce potential by 0–2 and physical ability by 0–3.
 
@@ -1158,7 +1158,7 @@ export const advanceInjuryRecovery = (player: Player): Player => {
 };
 ```
 
-- [ ] **Step 5: Verify deterministic progression and commit**
+- [x] **Step 5: Verify deterministic progression and commit**
 
 Run: `pnpm test -- tests/unit/progression.test.ts tests/unit/injuries.test.ts && pnpm exec tsc --noEmit`
 
@@ -1181,7 +1181,7 @@ git commit -m "feat: model player growth and injuries"
 - Consumes: schedules, tables, match simulation, world, player, RNG.
 - Produces: `createSeasonState(world, seasonNumber, rng)`, `advanceCompetitionRound(state)`, `finalizeSeason(state)`, and `selectNationalTeam(player, seasonContext)`.
 
-- [ ] **Step 1: Write a complete-season invariant test**
+- [x] **Step 1: Write a complete-season invariant test**
 
 ```ts
 it("finishes all eight leagues, four domestic cups, and one continental cup", () => {
@@ -1195,13 +1195,13 @@ it("finishes all eight leagues, four domestic cups, and one continental cup", ()
 });
 ```
 
-- [ ] **Step 2: Verify the season test fails**
+- [x] **Step 2: Verify the season test fails**
 
 Run: `pnpm test -- tests/integration/season.test.ts`
 
 Expected: FAIL because the season orchestrator does not exist.
 
-- [ ] **Step 3: Implement competition state machines**
+- [x] **Step 3: Implement competition state machines**
 
 Use the following fixed formats:
 
@@ -1211,15 +1211,15 @@ Use the following fixed formats:
 
 The preliminary-round seeding order is reputation descending with club ID as the stable tiebreaker; the lowest eight play, and the highest twelve receive byes.
 
-- [ ] **Step 4: Implement promotion and relegation atomically**
+- [x] **Step 4: Implement promotion and relegation atomically**
 
 For each country, move first-division positions 9–10 to division two and second-division positions 1–2 to division one in one immutable world update. Preserve club IDs and update only league IDs and levels. Verify each league still has ten clubs before accepting the new world.
 
-- [ ] **Step 5: Add season property tests**
+- [x] **Step 5: Add season property tests**
 
 Across 100 seeds, assert eight 10-team final tables, 18 matches per club, four domestic champions, one continental champion, exactly two promotions and relegations per country, and no club in two leagues simultaneously.
 
-- [ ] **Step 6: Verify and commit**
+- [x] **Step 6: Verify and commit**
 
 Run: `pnpm test -- tests/integration/season.test.ts tests/property/season.property.test.ts`
 
@@ -1241,7 +1241,7 @@ git commit -m "feat: orchestrate fictional football seasons"
 - Consumes: `Player`, `Club`, `World`, season performance, career intent, `RngState`.
 - Produces: `estimateClubRole(player, club)`, `generateTransferOffers(input)`, `acceptTransfer(player, offer)`, `renewContract(player, club, rng)`, and `requestLoan(input)`.
 
-- [ ] **Step 1: Write role and offer tests**
+- [x] **Step 1: Write role and offer tests**
 
 ```ts
 it("offers a starter role when player OVR exceeds the club line", () => {
@@ -1256,13 +1256,13 @@ it("does not offer clubs that cannot afford the player or already employ them", 
 });
 ```
 
-- [ ] **Step 2: Verify transfer tests fail**
+- [x] **Step 2: Verify transfer tests fail**
 
 Run: `pnpm test -- tests/unit/transfers.test.ts`
 
 Expected: FAIL because `transfers.ts` does not exist.
 
-- [ ] **Step 3: Implement exact role and contract rules**
+- [x] **Step 3: Implement exact role and contract rules**
 
 ```ts
 export type SquadRole = "prospect" | "rotation" | "starter" | "star";
@@ -1279,19 +1279,19 @@ export const estimateClubRole = (player: Player, club: Club): SquadRole => {
 
 Set contract length to 1–5 years, weekly wage from club finances and player market value, and appearance/title bonuses as integer currency values. Contract and offer IDs must derive from season, club ID, player ID, and RNG cursor.
 
-- [ ] **Step 4: Implement weighted offer generation**
+- [x] **Step 4: Implement weighted offer generation**
 
 Filter out the current club, unaffordable clubs, clubs more than 22 OVR above the player line, and clubs whose role need is incompatible. Weight remaining clubs by reputation fit, likely role, country change preference, current intent, recent form, and competition level. Return 0–5 unique offers. If no external offer exists, always include a valid `stay` decision; never force an invalid transfer.
 
-- [ ] **Step 5: Implement young-player loans**
+- [x] **Step 5: Implement young-player loans**
 
 Allow loans only for ages 16–23, contract years remaining at least two, and current role `prospect` or `rotation`. Loans last one season, preserve the parent contract, and require the destination to promise `starter` or `rotation`.
 
-- [ ] **Step 6: Add transfer property tests**
+- [x] **Step 6: Add transfer property tests**
 
 Across generated valid players and worlds, assert unique offer clubs, legal contract years, non-negative integer wages, no current-club transfer, accepted offers change the club exactly once, and replay from identical RNG state is equal.
 
-- [ ] **Step 7: Verify and commit**
+- [x] **Step 7: Verify and commit**
 
 Run: `pnpm test -- tests/unit/transfers.test.ts tests/property/transfers.property.test.ts`
 
@@ -1325,7 +1325,7 @@ git commit -m "feat: add contracts loans and transfers"
 - Consumes: `CareerState`, `Player`, `RngState`, `EventId`.
 - Produces: `CareerEvent`, `eventCatalog`, `eligibleEvents(state)`, `selectEvent(state)`, and `applyEventChoice(state, eventId, optionId)`.
 
-- [ ] **Step 1: Define and test the catalog contract**
+- [x] **Step 1: Define and test the catalog contract**
 
 ```ts
 it("contains at least 72 unique original events across all ten categories", () => {
@@ -1347,13 +1347,13 @@ it("every event has two or three unique options and a positive max trigger count
 });
 ```
 
-- [ ] **Step 2: Verify the catalog test fails**
+- [x] **Step 2: Verify the catalog test fails**
 
 Run: `pnpm test -- tests/unit/events.test.ts`
 
 Expected: FAIL because the event catalog does not exist.
 
-- [ ] **Step 3: Implement the event type and effect vocabulary**
+- [x] **Step 3: Implement the event type and effect vocabulary**
 
 ```ts
 export type EventCategory =
@@ -1390,7 +1390,7 @@ export interface CareerEvent {
 }
 ```
 
-- [ ] **Step 4: Populate the ten category files with exact counts**
+- [x] **Step 4: Populate the ten category files with exact counts**
 
 Create 8 training, 7 recovery, 8 coach, 8 teammates, 8 media, 6 family, 7 agent, 7 national-team, 7 contracts, and 6 milestones events, totaling 72. Use these exact stable titles as the catalog checklist:
 
@@ -1409,15 +1409,15 @@ Create 8 training, 7 recovery, 8 coach, 8 teammates, 8 media, 6 family, 7 agent,
 
 Each event must contain original body copy of 1–3 sentences and two or three choices whose effects use only the defined vocabulary. No option may grant more than +3 to one attribute, +12 to one condition, +8 reputation, or ±20% market value.
 
-- [ ] **Step 5: Implement eligibility, cooldown, and weighted selection**
+- [x] **Step 5: Implement eligibility, cooldown, and weighted selection**
 
 Filter by age, position, tags, trigger count, cooldown, injury/contract/national-team facts encoded by the event. At classic checkpoints, select one eligible event. In detailed mode, check every four completed club fixtures plus midseason and season end. If no event is eligible, return `NO_ELIGIBLE_EVENT` and let the orchestrator continue without an event.
 
-- [ ] **Step 6: Implement immutable choice effects and bounds**
+- [x] **Step 6: Implement immutable choice effects and bounds**
 
 Apply effects in listed order; clamp attributes to 1–99, condition to 0–100, reputation to 0–100, and market value to a non-negative integer. Record event ID, option ID, season, age, and effects in career history. Reject invalid event/option pairs without changing state or RNG.
 
-- [ ] **Step 7: Verify and commit**
+- [x] **Step 7: Verify and commit**
 
 Run: `pnpm test -- tests/unit/events.test.ts && pnpm exec tsc --noEmit`
 
@@ -1442,7 +1442,7 @@ git commit -m "feat: add original career event catalog"
 - Consumes: all domain contracts, world, match, moment, season, event, progression, injury, and transfer functions.
 - Produces: `CreateCareerInput`, `createCareer(input): GameResult<CareerState>`, `dispatchCommand(state, command): GameResult<CareerState>`, and `chooseDeterministicDefault(state): GameCommand`.
 
-- [ ] **Step 1: Write creation validation tests**
+- [x] **Step 1: Write creation validation tests**
 
 ```ts
 it("creates a 16-year-old career in preseason with a stable seed", () => {
@@ -1461,13 +1461,13 @@ it("rejects blank names and a starting club outside the world", () => {
 });
 ```
 
-- [ ] **Step 2: Verify creation tests fail**
+- [x] **Step 2: Verify creation tests fail**
 
 Run: `pnpm test -- tests/unit/create-career.test.ts`
 
 Expected: FAIL because career application modules do not exist.
 
-- [ ] **Step 3: Implement initial player and state creation**
+- [x] **Step 3: Implement initial player and state creation**
 
 ```ts
 export interface CreateCareerInput {
@@ -1488,7 +1488,7 @@ export interface CreateCareerInput {
 
 Initial attributes derive from position, difficulty, starting club, and RNG within 45–62; potential is 70–92. Set fitness, morale, form, and coach trust to bounded starting values, create a two-year prospect contract, and write one `CAREER_CREATED` history entry. Validate name length 1–40, shirt 1–99, supported nationality, and club reference before consuming RNG.
 
-- [ ] **Step 4: Implement exact phase/command transitions**
+- [x] **Step 4: Implement exact phase/command transitions**
 
 ```ts
 const allowedCommands: Record<CareerPhase, readonly GameCommand["type"][]> = {
@@ -1507,15 +1507,15 @@ const allowedCommands: Record<CareerPhase, readonly GameCommand["type"][]> = {
 
 Classic mode uses five event checkpoints after the player's club has completed 4, 8, 12, and 16 fixtures and at season completion. A checkpoint with no eligible event immediately continues; otherwise it pauses for `CHOOSE_EVENT`. This guarantees four to six checks per season without changing match rules.
 
-- [ ] **Step 5: Implement age and retirement boundaries**
+- [x] **Step 5: Implement age and retirement boundaries**
 
 At the end of each season, archive all statistics before incrementing age. Ages 16 through 36 each receive one season. After archiving the age-36 season, set phase to `retired`; do not generate offers or a season 22.
 
-- [ ] **Step 6: Implement deterministic automatic strategy**
+- [x] **Step 6: Implement deterministic automatic strategy**
 
 The test strategy chooses technique training, steady growth, the first event option, the lowest-risk active moment, the first starter-role offer whose reputation exceeds the current club, otherwise stay, and acknowledges reports immediately. It may not inspect future RNG values.
 
-- [ ] **Step 7: Run full classic and detailed career tests**
+- [x] **Step 7: Run full classic and detailed career tests**
 
 ```ts
 it("completes exactly 21 archived seasons in classic mode", () => {
@@ -1542,7 +1542,7 @@ it("resolves one classic season in less than one second on the test host", () =>
 });
 ```
 
-- [ ] **Step 8: Verify and commit**
+- [x] **Step 8: Verify and commit**
 
 Run: `pnpm test -- tests/unit/create-career.test.ts tests/integration/classic-career.test.ts tests/integration/detailed-career.test.ts`
 
@@ -1564,7 +1564,7 @@ git commit -m "feat: orchestrate complete player careers"
 - Consumes: retired `CareerState`, player position, archives, honours, national-team records, peak OVR, influence tags.
 - Produces: `GoatScoreBreakdown` and `calculateGoatScore(career): GameResult<GoatScoreBreakdown>`.
 
-- [ ] **Step 1: Write weighting and position-fairness tests**
+- [x] **Step 1: Write weighting and position-fairness tests**
 
 ```ts
 it("returns seven components that sum to the total", () => {
@@ -1585,13 +1585,13 @@ it("does not require goals for an elite goalkeeper score", () => {
 });
 ```
 
-- [ ] **Step 2: Verify score tests fail**
+- [x] **Step 2: Verify score tests fail**
 
 Run: `pnpm test -- tests/unit/goat-score.test.ts`
 
 Expected: FAIL because the scoring module does not exist.
 
-- [ ] **Step 3: Implement exact component caps**
+- [x] **Step 3: Implement exact component caps**
 
 ```ts
 export interface GoatScoreBreakdown {
@@ -1613,11 +1613,11 @@ Normalize performance per 90 minutes and position. Use goalkeeper saves/clean sh
 
 Team honours multiply the trophy base value by the player's share of available minutes and average rating factor. Individual awards use fixed values by scope. National team uses appearances, tournament contribution, and honours. Peak OVR maps 55–95 linearly to 0–100. Longevity counts seasons with at least 900 minutes and rating at least 6.5. Influence uses captaincy, loyalty, milestone, comeback, and record tags.
 
-- [ ] **Step 4: Generate explanations from measured facts**
+- [x] **Step 4: Generate explanations from measured facts**
 
 Return 3–7 explanation strings chosen from the largest component contributors, for example `"14 high-level seasons contributed 82 longevity points"`. Do not output generic praise that cannot be traced to career data.
 
-- [ ] **Step 5: Add property tests and commit**
+- [x] **Step 5: Add property tests and commit**
 
 Across arbitrary valid retired careers, assert component bounds, integer total, sum equality, replay equality, no NaN, and no input mutation.
 
@@ -1643,7 +1643,7 @@ git commit -m "feat: score and explain retired careers"
 - Consumes: `CareerState`, `World`, save/world schema versions.
 - Produces: `CareerSlot = 1 | 2 | 3`, `listSlots()`, `loadSlot(slot)`, `commitSlot(slot, nextState, committedAt)`, `deleteSlot(slot)`, `restoreSlotBackup(slot)`, `exportCareer(state)`, `importCareer(text)`, `exportWorld(world)`, and `importWorld(text)`.
 
-- [ ] **Step 1: Write IndexedDB transactional tests with fake-indexeddb**
+- [x] **Step 1: Write IndexedDB transactional tests with fake-indexeddb**
 
 ```ts
 import "fake-indexeddb/auto";
@@ -1661,13 +1661,13 @@ it("stores three independent slots and preserves the prior state as backup", asy
 });
 ```
 
-- [ ] **Step 2: Verify persistence tests fail**
+- [x] **Step 2: Verify persistence tests fail**
 
 Run: `pnpm test -- tests/unit/persistence.test.ts`
 
 Expected: FAIL because persistence modules do not exist.
 
-- [ ] **Step 3: Implement the database contract**
+- [x] **Step 3: Implement the database contract**
 
 ```ts
 interface CareerDatabase extends DBSchema {
@@ -1696,11 +1696,11 @@ const getDatabase = () => openDB<CareerDatabase>("open-pitch-legacy", 1, {
 
 `commitSlot` must perform the read and replacement in one read-write transaction. Store the previous `state` as `backup`. The UI supplies `committedAt`; persistence may not call system time on behalf of the engine.
 
-- [ ] **Step 4: Define versioned save validation**
+- [x] **Step 4: Define versioned save validation**
 
 Build strict Zod schemas for persisted state discriminants and bounded scalar fields, then use referential refinement for world, player club, fixtures, active event, and active moment. Reject unknown schema/rules major versions with an issue at `saveSchemaVersion` or `rulesVersion`. Preserve all validation issues; do not return a partial state.
 
-- [ ] **Step 5: Implement JSON envelopes and tests**
+- [x] **Step 5: Implement JSON envelopes and tests**
 
 ```ts
 export interface CareerExportEnvelope {
@@ -1720,7 +1720,7 @@ export interface WorldExportEnvelope {
 
 Test that a career export round-trips exactly, a world envelope cannot be imported as a career, invalid JSON returns line-independent parse feedback, an unsupported version is rejected, and failure never writes to IndexedDB.
 
-- [ ] **Step 6: Verify and commit**
+- [x] **Step 6: Verify and commit**
 
 Run: `pnpm test -- tests/unit/persistence.test.ts tests/unit/json-transfer.test.ts`
 
@@ -1758,7 +1758,7 @@ git commit -m "feat: persist and transfer local careers"
 - Consumes: pure `createCareer`, `dispatchCommand`, scoring, persistence, and JSON-transfer functions.
 - Produces: the approved route set and a client-side `useCareerSlot(slot)` coordinator.
 
-- [ ] **Step 1: Test the coordinator's commit-before-publish rule**
+- [x] **Step 1: Test the coordinator's commit-before-publish rule**
 
 Extract a UI-independent `applyAndCommit(current, command, persist)` helper into `use-career-slot.ts` and test it directly:
 
@@ -1779,11 +1779,11 @@ it("returns the committed state after persistence succeeds", async () => {
 });
 ```
 
-- [ ] **Step 2: Implement the slot hook**
+- [x] **Step 2: Implement the slot hook**
 
 The hook loads a slot once on mount, exposes `{ state, status, error, dispatch, restoreBackup, exportSave }`, serializes commands through one promise chain, persists before calling React `setState`, and disables controls while a command is pending. It may format `committedAt` with `new Date().toISOString()` because that timestamp is persistence metadata, not simulation input.
 
-- [ ] **Step 3: Build the home and creation flow**
+- [x] **Step 3: Build the home and creation flow**
 
 The home page renders exactly three `SlotCard` components with accessible actions for New, Continue, Export, Import, Restore backup, and Delete. Destructive delete requires a native confirmation dialog and reports whether recovery is possible.
 
@@ -1801,7 +1801,7 @@ The new-career form exposes name, nationality, four-position radio group, prefer
 </fieldset>
 ```
 
-- [ ] **Step 4: Render phase-specific career controls**
+- [x] **Step 4: Render phase-specific career controls**
 
 Use the `CareerState.phase` discriminant:
 
@@ -1816,15 +1816,15 @@ Use the `CareerState.phase` discriminant:
 Every button must dispatch one domain command; components may not directly edit the game state.
 Every legal gameplay button must also carry `data-game-action` with the command type, the phase label must carry `data-testid="current-phase"`, and the active-moment container must carry `data-testid="active-moment"` so browser tests can report the exact paused state without coupling to prose.
 
-- [ ] **Step 5: Build archive, retirement, and world routes**
+- [x] **Step 5: Build archive, retirement, and world routes**
 
 Archive renders one semantic table row per age season and separate lists for transfers, honours, awards, and national-team records. Retirement calculates the score from the loaded retired career and shows total, seven component rows, and evidence explanations. World route previews current country/league/club counts, exports the active world, validates an uploaded world, displays every issue path, and requests confirmation before replacement.
 
-- [ ] **Step 6: Add minimal accessible CSS**
+- [x] **Step 6: Add minimal accessible CSS**
 
 Define only readable system typography, 44px minimum interactive targets, visible focus outlines, constrained content width, responsive table overflow, semantic success/error colors, and disabled/pending states. Do not add logos, gradients, animations, target-site colors, target-site layouts, or decorative imagery.
 
-- [ ] **Step 7: Verify and commit**
+- [x] **Step 7: Verify and commit**
 
 Run: `pnpm test -- tests/unit/ui-state.test.ts && pnpm lint && pnpm build`
 
@@ -1850,7 +1850,7 @@ git commit -m "feat: add minimal career simulator interface"
 - Consumes: the complete Next.js app and public browser routes.
 - Produces: automated acceptance evidence and user/developer documentation.
 
-- [ ] **Step 1: Write the home/save browser test**
+- [x] **Step 1: Write the home/save browser test**
 
 ```ts
 import { expect, test, type Page } from "@playwright/test";
@@ -1883,7 +1883,7 @@ test("creates, reloads, exports, deletes, and imports a local career", async ({ 
 });
 ```
 
-- [ ] **Step 2: Write classic-mode retirement acceptance**
+- [x] **Step 2: Write classic-mode retirement acceptance**
 
 ```ts
 const createCareerFromUi = async (
@@ -1923,7 +1923,7 @@ test("classic mode reaches an explained age-36 retirement", async ({ page }) => 
 });
 ```
 
-- [ ] **Step 3: Write detailed-mode pause/resume acceptance**
+- [x] **Step 3: Write detailed-mode pause/resume acceptance**
 
 ```ts
 test("detailed mode restores and resolves a paused key moment", async ({ page }) => {
@@ -1942,7 +1942,7 @@ test("detailed mode restores and resolves a paused key moment", async ({ page })
 });
 ```
 
-- [ ] **Step 4: Write world import safety acceptance**
+- [x] **Step 4: Write world import safety acceptance**
 
 ```ts
 test("invalid world import cannot replace the active world", async ({ page }) => {
@@ -1965,15 +1965,15 @@ test("invalid world import cannot replace the active world", async ({ page }) =>
 });
 ```
 
-- [ ] **Step 5: Document the exact world format**
+- [x] **Step 5: Document the exact world format**
 
 `docs/world-format.md` must include the schema version, required four-country/eight-league/eighty-club cardinality, every field and bound from Task 4, the five accepted playing styles, a complete one-country/two-league/twenty-club excerpt generated from the default world, import steps, and failure examples for duplicate IDs and invalid references.
 
-- [ ] **Step 6: Document local development and product boundaries**
+- [x] **Step 6: Document local development and product boundaries**
 
 `README.md` must include Node 22+, pnpm 10+, `pnpm install`, `pnpm dev`, `pnpm test`, `pnpm e2e`, `pnpm lint`, `pnpm build`, route descriptions, three-slot behavior, export/import recovery, deterministic seed behavior, and the explicit statement that all names/data/copy are original and no real-world football IP is bundled.
 
-- [ ] **Step 7: Run the full verification matrix**
+- [x] **Step 7: Run the full verification matrix**
 
 Run:
 
@@ -1987,13 +1987,13 @@ pnpm e2e
 
 Expected: every unit/property/integration test passes, ESLint exits 0, Next build succeeds, and all four Playwright specifications pass in Chromium.
 
-- [ ] **Step 8: Review scope and repository state**
+- [x] **Step 8: Review scope and repository state**
 
 Run: `git diff --check && git status --short && rg -n "Il Nuovo Goat|FIFA|UEFA|Premier League|La Liga|Serie A|Bundesliga" src README.md docs/world-format.md`
 
 Expected: no whitespace errors; only intended implementation/documentation changes remain; the restricted-name scan returns either no matches or only the README's explicit non-affiliation statement. Do not commit `.next`, `playwright-report`, `test-results`, or exported save files.
 
-- [ ] **Step 9: Commit the acceptance layer**
+- [x] **Step 9: Commit the acceptance layer**
 
 ```bash
 git add tests/e2e docs/world-format.md README.md package.json
@@ -2002,13 +2002,13 @@ git commit -m "test: verify complete browser football careers"
 
 ## Final Acceptance Checklist
 
-- [ ] Both modes complete exactly 21 seasons and retire after age 36.
-- [ ] The default world always contains four countries, eight leagues, and eighty original clubs.
-- [ ] League, domestic cup, continental cup, promotion/relegation, and national-team invariants pass across the property-test seed set.
-- [ ] At least 72 original events exist with unique IDs and valid bounded effects.
-- [ ] Same version, world, seed, and command sequence replay to an equal final state and score.
-- [ ] Three IndexedDB slots keep one backup each and round-trip through versioned JSON.
-- [ ] Invalid world or career imports report field paths and do not mutate existing data.
-- [ ] GOAT Score is bounded to 0–1000, sums exactly from seven components, and explains measurable career facts.
-- [ ] Minimal routes are keyboard-usable on desktop and phone widths without reproducing target-site visual design.
-- [ ] `pnpm test`, `pnpm lint`, `pnpm build`, and `pnpm e2e` all exit 0.
+- [x] Both modes complete exactly 21 seasons and retire after age 36.
+- [x] The default world always contains four countries, eight leagues, and eighty original clubs.
+- [x] League, domestic cup, continental cup, promotion/relegation, and national-team invariants pass across the property-test seed set.
+- [x] At least 72 original events exist with unique IDs and valid bounded effects.
+- [x] Same version, world, seed, and command sequence replay to an equal final state and score.
+- [x] Three IndexedDB slots keep one backup each and round-trip through versioned JSON.
+- [x] Invalid world or career imports report field paths and do not mutate existing data.
+- [x] GOAT Score is bounded to 0–1000, sums exactly from seven components, and explains measurable career facts.
+- [x] Minimal routes are keyboard-usable on desktop and phone widths without reproducing target-site visual design.
+- [x] `pnpm test`, `pnpm lint`, `pnpm build`, and `pnpm e2e` all exit 0.
