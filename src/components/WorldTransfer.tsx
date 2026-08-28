@@ -46,7 +46,7 @@ export const WorldTransfer = ({ world, onReplaced }: { readonly world: World; re
   return (
     <section className="panel" aria-label="World management">
       <h2>Active world</h2>
-      <dl className="stats-grid">
+      <dl className="stats-grid" data-testid="world-counts">
         <div><dt>Countries</dt><dd>{preview.countryCount}</dd></div>
         <div><dt>Leagues</dt><dd>{preview.leagueCount}</dd></div>
         <div><dt>Clubs</dt><dd>{preview.clubCount}</dd></div>
