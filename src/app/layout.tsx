@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 
-export const metadata: Metadata = { title: "Open Pitch Legacy" };
+export const metadata: Metadata = { title: "Il Nuovo Goat" };
 
 export default function RootLayout({
   children,

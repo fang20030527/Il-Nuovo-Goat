@@ -82,7 +82,7 @@ export const importCareer = (text: string): CareerImportResult => {
   if (!parsed.ok) return parsed;
   const raw = parsed.raw as { kind?: unknown } | null;
   if (raw === null || typeof raw !== "object" || raw.kind !== "open-pitch-legacy-career") {
-    return { ok: false, issues: [{ path: "kind", message: "File is not an Open Pitch Legacy career export" }] };
+    return { ok: false, issues: [{ path: "kind", message: "File is not an Il Nuovo Goat career export" }] };
   }
   const result = careerExportEnvelopeSchema.safeParse(raw);
   if (!result.success) {
@@ -96,7 +96,7 @@ export const importWorldEnvelope = (text: string): WorldTransferImportResult => 
   if (!parsed.ok) return parsed;
   const raw = parsed.raw as { kind?: unknown } | null;
   if (raw === null || typeof raw !== "object" || raw.kind !== "open-pitch-legacy-world") {
-    return { ok: false, issues: [{ path: "kind", message: "File is not an Open Pitch Legacy world export" }] };
+    return { ok: false, issues: [{ path: "kind", message: "File is not an Il Nuovo Goat world export" }] };
   }
   const result = worldExportEnvelopeSchema.safeParse(raw);
   if (!result.success) {
