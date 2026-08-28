@@ -55,7 +55,7 @@ const archiveArb: fc.Arbitrary<CareerArchive> = fc.record({
 const playerArb = (position: Player["position"], caps: number, tags: string[]): Player => ({
   id: "player-1",
   name: "Property Player",
-  nationality: "northland" as Player["nationality"],
+  nationality: "italy" as Player["nationality"],
   position,
   preferredFoot: "right",
   shirtNumber: 9,

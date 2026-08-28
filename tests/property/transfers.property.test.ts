@@ -15,7 +15,7 @@ const playerArbitrary = (seedNote: string): fc.Arbitrary<Player> =>
   }).map(({ overall, age, form, marketValue }): Player => ({
     id: `player-${seedNote}`,
     name: "Property Player",
-    nationality: "northland" as Player["nationality"],
+    nationality: "italy" as Player["nationality"],
     position: "midfielder",
     preferredFoot: "right",
     shirtNumber: 8,

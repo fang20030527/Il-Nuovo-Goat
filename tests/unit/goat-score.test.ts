@@ -14,7 +14,7 @@ const stats = (overrides: Partial<SeasonStats> = {}): SeasonStats => ({
 const makePlayer = (overrides: Partial<Player> = {}): Player => ({
   id: "player-1",
   name: "Score Player",
-  nationality: "northland" as Player["nationality"],
+  nationality: "italy" as Player["nationality"],
   position: "forward",
   preferredFoot: "right",
   shirtNumber: 9,
@@ -28,9 +28,9 @@ const makePlayer = (overrides: Partial<Player> = {}): Player => ({
   coachTrust: 70,
   reputation: 70,
   marketValue: 20_000_000,
-  clubId: clubId("northland-aster-vale"),
+  clubId: clubId("italy-torino"),
   contract: {
-    clubId: clubId("northland-aster-vale"),
+    clubId: clubId("italy-torino"),
     startSeason: 19,
     endSeason: 21,
     weeklyWage: 40_000,
@@ -50,7 +50,7 @@ const makePlayer = (overrides: Partial<Player> = {}): Player => ({
 const makeArchive = (overrides: Partial<CareerArchive> = {}): CareerArchive => ({
   season: 1,
   age: 17,
-  clubId: clubId("northland-aster-vale"),
+  clubId: clubId("italy-torino"),
   stats: stats(),
   overall: 60,
   marketValue: 1_000_000,

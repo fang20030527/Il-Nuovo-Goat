@@ -16,7 +16,7 @@ import { createDefaultWorld } from "@/game/world/default-world";
 const makePlayer = (): Player => ({
   id: "player-1",
   name: "Transfer Player",
-  nationality: "northland" as Player["nationality"],
+  nationality: "italy" as Player["nationality"],
   position: "forward",
   preferredFoot: "left",
   shirtNumber: 9,
@@ -30,9 +30,9 @@ const makePlayer = (): Player => ({
   coachTrust: 72,
   reputation: 66,
   marketValue: 12_000_000,
-  clubId: clubId("northland-aster-vale"),
+  clubId: clubId("italy-torino"),
   contract: {
-    clubId: clubId("northland-aster-vale"),
+    clubId: clubId("italy-torino"),
     startSeason: 2,
     endSeason: 6,
     weeklyWage: 30_000,

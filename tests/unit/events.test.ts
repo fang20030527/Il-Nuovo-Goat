@@ -11,7 +11,7 @@ import type { CareerState } from "@/game/domain/career";
 const makePlayer = (overrides: Partial<Player> = {}): Player => ({
   id: "player-1",
   name: "Event Player",
-  nationality: "northland" as Player["nationality"],
+  nationality: "italy" as Player["nationality"],
   position: "midfielder",
   preferredFoot: "right",
   shirtNumber: 8,

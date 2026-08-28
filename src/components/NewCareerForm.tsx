@@ -9,6 +9,7 @@ import type { CareerSlot } from "@/persistence/career-db";
 import { createCareer } from "@/game/application/create-career";
 import { commitSlot } from "@/persistence/career-db";
 import { clubId, countryId, type ClubId, type CountryId } from "@/game/domain/ids";
+import { WorldMapPicker } from "@/components/WorldMapPicker";
 
 const POSITIONS: readonly PositionFamily[] = ["goalkeeper", "defender", "midfielder", "forward"];
 const DIFFICULTIES: readonly Difficulty[] = ["story", "balanced", "hard"];
@@ -38,6 +39,17 @@ export const NewCareerForm = ({ slot, world, occupied, defaultMode = "classic" }
     () => world.clubs.filter((club) => club.leagueId === leagueId),
     [world, leagueId],
   );
+
+  // Map picker only supports the built-in real-nation ids; imported custom
+  // worlds fall back to the plain select below.
+  const MAP_SUPPORTED: readonly string[] = ["italy", "england", "spain", "germany"];
+  const mapSupported = world.countries.every((country) => MAP_SUPPORTED.includes(country.id));
+
+  const selectNationality = (next: CountryId) => {
+    setNationality(next);
+    const firstLeague = world.leagues.find((league) => league.countryId === next);
+    if (firstLeague) setLeagueId(firstLeague.id);
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -80,23 +92,26 @@ export const NewCareerForm = ({ slot, world, occupied, defaultMode = "classic" }
         <input name="playerName" required minLength={1} maxLength={40} />
       </label>
 
-      <label>
-        Nationality
-        <select
-          name="nationality"
-          value={nationality}
-          onChange={(event) => {
-            const next = countryId(event.target.value) as CountryId;
-            setNationality(next);
-            const firstLeague = world.leagues.find((league) => league.countryId === next);
-            if (firstLeague) setLeagueId(firstLeague.id);
-          }}
-        >
-          {world.countries.map((country) => (
-            <option key={country.id} value={country.id}>{country.name}</option>
-          ))}
-        </select>
-      </label>
+      <div className="form-field">
+        <span className="field-label">Nationality</span>
+        {mapSupported ? (
+          <WorldMapPicker
+            countries={world.countries.map((country) => ({ id: country.id, name: country.name }))}
+            selected={nationality}
+            onSelect={(next) => selectNationality(next)}
+          />
+        ) : (
+          <select
+            name="nationality"
+            value={nationality}
+            onChange={(event) => selectNationality(countryId(event.target.value) as CountryId)}
+          >
+            {world.countries.map((country) => (
+              <option key={country.id} value={country.id}>{country.name}</option>
+            ))}
+          </select>
+        )}
+      </div>
 
       <fieldset>
         <legend>Position</legend>

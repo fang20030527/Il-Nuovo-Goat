@@ -8,43 +8,64 @@ interface CountrySeed {
 }
 
 const countrySeeds: readonly CountrySeed[] = [
-  { id: "northland", name: "Northland", locations: [
-    "Aster Vale", "Ironford", "Greyhaven", "Morrow Bay", "Highmere",
-    "Stonewick", "Cedar Crown", "Brindle", "Foxbridge", "Northwatch",
-    "Elmstead", "Rookport", "Frostmere", "Dunmarsh", "Oakcross",
-    "Raven Fell", "Whitecliff", "Briar Gate", "Kestrel", "Westbarrow",
+  { id: "italy", name: "Italy", locations: [
+    "Torino", "Milano", "Napoli", "Roma", "Firenze",
+    "Bologna", "Genova", "Palermo", "Verona", "Bari",
+    "Cagliari", "Parma", "Udine", "Brescia", "Lecce",
+    "Como", "Empoli", "Salerno", "Sassuolo", "Monza",
   ] },
-  { id: "solaria", name: "Solaria", locations: [
-    "Luz Marina", "Costa Dorada", "Valmora", "Sierra Azul", "Puerto Alba",
-    "Rio Claro", "Monteluz", "San Vero", "Cobre Vista", "Isla Verde",
-    "Campo Rojo", "Nueva Estrella", "Bahia Sur", "Piedra Sol", "Las Palmas",
-    "Miraflor", "Torrenube", "Prado Alto", "Vela Cruz", "Arena Blanca",
+  { id: "england", name: "England", locations: [
+    "London", "Manchester", "Liverpool", "Leeds", "Newcastle",
+    "Birmingham", "Sheffield", "Nottingham", "Bristol", "Southampton",
+    "Leicester", "Brighton", "Wolverhampton", "Derby", "Norwich",
+    "Middlesbrough", "Sunderland", "Coventry", "Plymouth", "Portsmouth",
   ] },
-  { id: "verdancia", name: "Verdancia", locations: [
-    "Greenwall", "Lake Ember", "Willow City", "Pine Harbour", "Meadowgate",
-    "Brookfield", "Ashbourne", "Holloway", "Mossley", "Riverglass",
-    "Fernhill", "Maple Junction", "Orchard Row", "Woodmere", "Claybank",
-    "Roseford", "Birch Point", "Thistle End", "Hazelton", "Millgrove",
+  { id: "spain", name: "Spain", locations: [
+    "Madrid", "Barcelona", "Sevilla", "Valencia", "Bilbao",
+    "San Sebastian", "Villarreal", "Malaga", "Granada", "Zaragoza",
+    "Valladolid", "Santander", "Coruna", "Oviedo", "Murcia",
+    "Pamplona", "Almeria", "Cadiz", "Huesca", "Gijon",
   ] },
-  { id: "eastria", name: "Eastria", locations: [
-    "Akebono", "Jade Harbour", "Sun Crane", "Lotus Gate", "Silver Pagoda",
-    "Red Maple", "Moonbridge", "Cloud Peak", "Pearl River", "Golden Field",
-    "Bamboo Coast", "Morning Bell", "Pine Lantern", "Azure Steppe", "Plum City",
-    "Quiet Bay", "Sky Temple", "Amber Road", "Snow Blossom", "Eastwind",
+  { id: "germany", name: "Germany", locations: [
+    "Munich", "Berlin", "Hamburg", "Cologne", "Frankfurt",
+    "Dortmund", "Leipzig", "Stuttgart", "Bremen", "Hanover",
+    "Dusseldorf", "Nuremberg", "Freiburg", "Mainz", "Augsburg",
+    "Bielefeld", "Karlsruhe", "Bochum", "Rostock", "Kiel",
   ] },
 ] as const;
 
 const clampRating = (value: number): number => Math.max(1, Math.min(100, Math.round(value)));
 const styles: readonly ClubStyle[] = ["balanced", "pressing", "counter", "possession", "direct"];
 
+const clubPrefix = (countryId: string, location: string, level: number): string => {
+  if (countryId === "italy") {
+    const prefixes = ["AC", "SSC", "AS", "FC", "UC", "SS", "US", "Calcio"];
+    return `${prefixes[location.length % prefixes.length]} ${location}`;
+  }
+  if (countryId === "england") {
+    if (level === 1) return `${location} ${["United", "City", "FC", "Rovers", "Athletic"][location.length % 5]}`;
+    return `${location} ${["FC", "Town", "Wanderers", "Albion", "County"][location.length % 5]}`;
+  }
+  if (countryId === "spain") {
+    const prefixes = ["Real", "Atletico", "Deportivo", "CF", "UD"];
+    return `${prefixes[location.length % prefixes.length]} ${location}`;
+  }
+  if (countryId === "germany") {
+    if (level === 1) return `${["FC Bayern", "Borussia", "Bayer", "VfL", "SV"][location.length % 5]} ${location}`;
+    return `${["FC", "VfB", "TSV", "SC", "Rot-Weiss"][location.length % 5]} ${location}`;
+  }
+  return `${location} FC`;
+};
+
 const makeClub = (countryIndex: number, country: CountrySeed, location: string, index: number): Club => {
   const level = index < 10 ? 1 : 2;
   const withinDivision = index % 10;
   const base = (level === 1 ? 76 : 58) - withinDivision * 2 + countryIndex;
   const slug = location.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  const name = clubPrefix(country.id, location, level);
   return {
     id: clubId(`${country.id}-${slug}`),
-    name: `${location} ${level === 1 ? "Athletic" : "Union"}`,
+    name,
     countryId: countryId(country.id),
     leagueId: leagueId(`${country.id}-${level}`),
     reputation: clampRating(base + 4),
@@ -63,7 +84,7 @@ const makeClub = (countryIndex: number, country: CountrySeed, location: string, 
 };
 
 const nationalStrengths: Record<string, number> = {
-  northland: 78, solaria: 84, verdancia: 71, eastria: 66,
+  italy: 86, england: 88, spain: 85, germany: 84,
 };
 
 export const createDefaultWorld = (): World => {
@@ -76,7 +97,13 @@ export const createDefaultWorld = (): World => {
     ([1, 2] as const).map((level) => ({
       id: leagueId(`${seed.id}-${level}`),
       countryId: countryId(seed.id),
-      name: `${seed.name} ${level === 1 ? "Premier Division" : "Second Division"}`,
+      name: seed.id === "italy"
+        ? (level === 1 ? "Serie A" : "Serie B")
+        : seed.id === "england"
+          ? (level === 1 ? "Premier League" : "Championship")
+          : seed.id === "spain"
+            ? (level === 1 ? "La Liga" : "La Liga 2")
+            : (level === 1 ? "Bundesliga" : "2. Bundesliga"),
       level,
     })),
   );

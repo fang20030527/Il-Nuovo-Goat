@@ -16,7 +16,7 @@ import {
 const makePlayer = (overrides: Partial<Player> = {}): Player => ({
   id: "player-1",
   name: "Moving Player",
-  nationality: "northland" as Player["nationality"],
+  nationality: "italy" as Player["nationality"],
   position: "midfielder",
   preferredFoot: "right",
   shirtNumber: 8,
@@ -52,8 +52,8 @@ const makePlayer = (overrides: Partial<Player> = {}): Player => ({
 const makeClub = (overrides: Partial<Club> = {}): Club => ({
   id: clubId("club-x"),
   name: "Club X",
-  countryId: "northland" as Club["countryId"],
-  leagueId: "northland-1" as Club["leagueId"],
+  countryId: "italy" as Club["countryId"],
+  leagueId: "italy-1" as Club["leagueId"],
   reputation: 60,
   finances: 70,
   academy: 60,

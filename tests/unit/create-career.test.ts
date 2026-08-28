@@ -9,7 +9,7 @@ export const validCreateInput = (overrides: Partial<CreateCareerInput> = {}): Cr
   return {
     world,
     playerName: "Test Player",
-    nationality: countryId("northland"),
+    nationality: countryId("italy"),
     position: "forward",
     preferredFoot: "right",
     shirtNumber: 9,
